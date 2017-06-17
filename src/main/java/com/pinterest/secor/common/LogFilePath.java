@@ -37,8 +37,8 @@ import java.util.Arrays;
  *     topic is a kafka topic,
  *     partition1, ..., partitionN is the list of partition names extracted from message content.
  *         E.g., the partition may describe the message date such as dt=2014-01-01,
- *     generation is the consumer version.  It allows up to perform rolling upgrades of
- *         non-compatible Secor releases,
+ *              generation is the consumer version.  It allows up to perform rolling upgrades of
+ *              non-compatible Secor releases,
  *     kafkaPartition is the kafka partition of the topic,
  *     firstMessageOffset is the offset of the first message in a batch of files committed
  *         atomically.

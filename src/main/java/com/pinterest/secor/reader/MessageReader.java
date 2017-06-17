@@ -74,7 +74,7 @@ public class MessageReader {
         LOG.debug("Use TopicFilter {}({})", topicFilter.getClass(), topicFilter);
         List<KafkaStream<byte[], byte[]>> streams =
             mConsumerConnector.createMessageStreamsByFilter(topicFilter);
-        KafkaStream<byte[], byte[]> stream = streams.get(0);
+        KafkaStream<byte[], byte[]> stream = streams.get(0);   // Why is this guy returning only the first element in the stream.
         mIterator = stream.iterator();
         mLastAccessTime = new HashMap<TopicPartition, Long>();
         StatsUtil.setLabel("secor.kafka.consumer.id", IdUtil.getConsumerId());
@@ -86,6 +86,7 @@ public class MessageReader {
         long now = System.currentTimeMillis() / 1000L;
         mLastAccessTime.put(topicPartition, now);
         Iterator iterator = mLastAccessTime.entrySet().iterator();
+        // sliding window which removes from the map the list of all tuples of {topicPartitions -> lastAccessTimes} which have expired
         while (iterator.hasNext()) {
             Map.Entry pair = (Map.Entry) iterator.next();
             long lastAccessTime = (Long) pair.getValue();
